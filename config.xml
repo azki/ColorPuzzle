@@ -4,10 +4,10 @@
 	id		= "org.azki.color-puzzle"
 	version 	= "1.0.0">
 
-	<name>ColorPuzzle</name>
+	<name>Color Puzzle</name>
 
 	<description>
-		ColorPuzzle Game
+		Color Puzzle Game.
 	</description>
 
 	<author href="http://azki.org"

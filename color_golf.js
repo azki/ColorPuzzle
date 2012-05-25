@@ -343,8 +343,11 @@ var createButtons = function () {
 		.width(btnWidth)
 		.height(Math.floor(btnWidth / 3))
 		.data("index", i).appendTo($("#btns"));
-		$div[0].onmousedown = callbackFn;
-		$div[0].ontouchstart = callbackFn;
+		if ("ontouchstart" in $div[0]) {
+			$div[0].ontouchstart = callbackFn;
+		} else {
+			$div[0].onmousedown = callbackFn;
+		}
 	}
 };
 var drawGame = function () {
