@@ -13,6 +13,7 @@ var data = {
 var checkCache = [];
 var animateBuffer = [];
 var NO_UI = false;
+var DEVICE_WIDTH = 320;
 
 var viewHelp = function () {
 	var str;
@@ -84,7 +85,7 @@ var createTable = function () {
 	tableElem = document.createElement("table");
 	tableElem.cellSpacing = "0";
 	tableElem.cellPadding = "0";
-	halfSize = Math.floor(320 / data.cell / 2);
+	halfSize = Math.floor(DEVICE_WIDTH / data.cell / 2);
 	for (rowIndex = 0; rowIndex < data.row; rowIndex += 1) {
 		rowElem = tableElem.insertRow(rowIndex);
 		for (cellIndex = 0; cellIndex < data.cell; cellIndex += 1) {
@@ -96,7 +97,7 @@ var createTable = function () {
 			$div
 			.removeClass()
 			.addClass("color" + data.color[rowIndex][cellIndex])
-			.height(320 / data.row).width(320 / data.cell).appendTo(cellElem);
+			.height(DEVICE_WIDTH / data.row).width(DEVICE_WIDTH / data.cell).appendTo(cellElem);
 			if (data.mine[rowIndex][cellIndex]) {
 				$div.css("border-radius", halfSize + "px");
 			}
@@ -115,7 +116,7 @@ var setMineBorder = function ($zone, size) {
 };
 var animateBorder = function ($zone, rowIndex, cellIndex) {
 	var halfSize, bufIndex;
-	halfSize = Math.floor(320 / data.cell / 2);
+	halfSize = Math.floor(DEVICE_WIDTH / data.cell / 2);
 	bufIndex = rowIndex * cellIndex + cellIndex;
 	animateBuffer[bufIndex] = $zone;
 	setTimeout(function () {
@@ -293,43 +294,39 @@ var setBtn = function (index) {
 		data.lock = -1; //end
 		setTimeout(function () {
 			var sendRecord;
-			if (confirm("넌 '" + data.row + "x" + data.cell + "'를(을) " + data.turn + "턴으로 깼어.\n서버에 기록할래?")) {
-				data.name = prompt("기록 올릴 이름을 입력해줘:", data.name);
-				if (data.name) {
-					sendRecord = function () {
-						$("#topBtnPanel").hide();
-						$("#topStatePanel").show();
-						$.getJSON("http://cz.azki.org/record.jsonp.php?c=" + data.cell + "&t=" + data.turn + "&n=" + encodeURIComponent(data.name) + "&callback=?", function (sdata) {
-							var da;
-							da = sdata.split("\t");
-							alert("기록에 성공했어.\n네 기록은 " + da[1] + "명 중에 " + da[0] + "등이래.\n대단한걸~");
-							changeStage(0);
-							$("#topStatePanel").hide();
-							$("#topBtnPanel").show();
-						});
-//						.error(function() {
-//							if (confirm("기록에 실패했어.\n기록 전송을 위해 서버 연결을 다시 시도할래?")) {
-//								sendRecord();
-//							} else {
-//								changeStage(0);
-//							}
-//							$("#topStatePanel").hide();
-//							$("#topBtnPanel").show();
-//						});
-					};
-					sendRecord();
-					saveName(data.name);
-				} else {
-					changeStage(0);
-				}
+			data.name = prompt(data.turn + "턴인데 기록할려면 이름을 입력:", data.name);
+			if (data.name) {
+				sendRecord = function () {
+					$("#topBtnPanel").hide();
+					$("#topStatePanel").show();
+					$.getJSON("http://cz.azki.org/record.jsonp.php?c=" + data.cell + "&t=" + data.turn + "&n=" + encodeURIComponent(data.name) + "&callback=?", function (sdata) {
+						var da;
+						da = sdata.split("\t");
+						alert("기록에 성공했어.\n네 기록은 " + da[1] + "명 중에 " + da[0] + "등이래.\n대단한걸~");
+						changeStage(0);
+						$("#topStatePanel").hide();
+						$("#topBtnPanel").show();
+					});
+//					.error(function() {
+//						if (confirm("기록에 실패했어.\n기록 전송을 위해 서버 연결을 다시 시도할래?")) {
+//							sendRecord();
+//						} else {
+//							changeStage(0);
+//						}
+//						$("#topStatePanel").hide();
+//						$("#topBtnPanel").show();
+//					});
+				};
+				sendRecord();
+				saveName(data.name);
 			} else {
 				changeStage(0);
 			}
-		}, 320);
+		}, 100);
 		clearSave();
 		//clear animation
 		len = data.row * data.cell;
-		halfSize = Math.floor(320 / data.cell / 2);
+		halfSize = Math.floor(DEVICE_WIDTH / data.cell / 2);
 		for (i = 0; i < len; i += 1) {
 			if (animateBuffer[i]) {
 				setMineBorder(animateBuffer[i], halfSize);
