@@ -73,11 +73,12 @@ var initData = function (row, cell) {
 	data.mine = [];
 	data.row = row;
 	data.cell = cell;
-	initZone();
-	resetCheckCache();
 	data.minesum = 1;
 	data.turn = 0;
 	data.lock = 0;
+	initZone();
+	resetCheckCache();
+	saveZone();
 };
 var createTable = function () {
 	var tableElem, rowIndex, cellIndex, rowElem, cellElem, $div, halfSize;
@@ -189,20 +190,18 @@ var checkAround = function (rowIndex, cellIndex, newColorIndex) {
 	return drawCount;
 };
 var clearSave = function () {
-	//TODO.azki
-	if (window.localStorage && localStorage.getItem("cz_game") !== null) {
+	var game = localStorage.getItem("cz_game");
+	if (game !== null) {
 		localStorage.removeItem("cz_game");
 	}
 };
+var saveZone = function () {
+	var s = JSON.stringify(data);
+	localStorage.setItem("cz_stage", s);
+};
 var saveGame = function () {
-	var s;
-	//TODO.azki
-	if (window.localStorage) {
-		s = JSON.stringify(data);
-		localStorage.setItem("cz_game", s);
-		return true;
-	}
-	return false;
+	var s = JSON.stringify(data);
+	localStorage.setItem("cz_game", s);
 };
 var changeStage = function (plus) {
 	var stage;
@@ -336,7 +335,7 @@ var setBtn = function (index) {
 	} else {
 		resetCheckCache();
 		data.lock = 0;
-		//saveGame();
+		saveGame();
 	}
 };
 var createButtons = function () {
@@ -364,35 +363,39 @@ var drawGame = function () {
 };
 var loadGame = function () {
 	var s, d;
-	//TODO.azki
-	if (window.localStorage) {
-		s = localStorage.getItem("cz_game");
-		d = JSON.parse(s);
-		if (d !== null && d.lock === 0) {
-			data = d;
-			resetCheckCache();
-			drawGame();
-			return true;
-		}
+	s = localStorage.getItem("cz_game");
+	d = JSON.parse(s);
+	if (d !== null && d.lock === 0) {
+		data = d;
+		resetCheckCache();
+		drawGame();
+		return true;
+	}
+	return false;
+};
+var loadZone = function () {
+	var s, d;
+	s = localStorage.getItem("cz_stage");
+	d = JSON.parse(s);
+	if (d !== null && d.lock === 0) {
+		data = d;
+		resetCheckCache();
+		drawGame();
+		return true;
 	}
 	return false;
 };
 var initGame = function (cell) {
 	initData(cell, cell);
 	drawGame();
-	//TODO.azki
-	if (window.localStorage) {
-		localStorage.setItem("cz_cell", data.cell);
-	}
+	localStorage.setItem("cz_cell", data.cell);
 };
 var getLastCell = function () {
 	var lastCell;
 	//TODO.azki
-	if (window.localStorage) {
-		lastCell = localStorage.getItem("cz_cell");
-		if (lastCell) {
-			return 1 * lastCell;
-		}
+	lastCell = localStorage.getItem("cz_cell");
+	if (lastCell) {
+		return +lastCell;
 	}
 	return 3;
 };
