@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "org.azki.color-golf"
+	id		= "org.azki.color-puzzle"
 	version 	= "1.0.0">
 
-	<name>Color Golf</name>
+	<name>ColorPuzzle</name>
 
 	<description>
-		Color Golf Game
+		ColorPuzzle Game
 	</description>
 
 	<author href="http://azki.org"
