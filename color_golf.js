@@ -340,8 +340,8 @@ var createButtons = function () {
 		}
 		$div = $("<div>")
 		.addClass("color" + i)
-		.width(btnWidth)
-		.height(Math.floor(btnWidth / 3 - 3))
+		.width(btnWidth - 20)
+		.height(Math.floor(btnWidth / 3))
 		.data("index", i).appendTo($("#btns"));
 		if ("ontouchstart" in $div[0]) {
 			$div[0].ontouchstart = callbackFn;
