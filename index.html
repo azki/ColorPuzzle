@@ -23,7 +23,6 @@
 			<script>
 				document.addEventListener("deviceready", onDeviceReady, false);
 				function onDeviceReady() {
-					document.write('ready!!');
 					document.getElementById("tt1").onclick = function () {
 						window.localStorage.setItem("key", document.getElementById("tt0").value);
 					};
