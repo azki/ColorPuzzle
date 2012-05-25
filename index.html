@@ -17,5 +17,21 @@
 	</head>
 	<body>
 		<div>
+			<input id="tt0" type="text"/>
+			<button id="tt1">tt1</button>
+			<button id="tt2">tt2</button>
+			<script>
+				document.addEventListener("deviceready", onDeviceReady, false);
+				function onDeviceReady() {
+					document.write('ready!!');
+					document.getElementById("tt1").onclick = function () {
+						window.localStorage.setItem("key", document.getElementById("tt0").value);
+					};
+					document.getElementById("tt1").onclick = function () {
+						alert(window.localStorage.getItem("key"));
+					};
+				}
+			</script>
+		</div>
 	</body>
 </html>
