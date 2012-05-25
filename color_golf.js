@@ -191,7 +191,7 @@ var checkAround = function (rowIndex, cellIndex, newColorIndex) {
 };
 var clearSave = function () {
 	var game = localStorage.getItem("cz_game");
-	if (game !== null) {
+	if (game) {
 		localStorage.removeItem("cz_game");
 	}
 };
@@ -364,8 +364,10 @@ var drawGame = function () {
 var loadGame = function () {
 	var s, d;
 	s = localStorage.getItem("cz_game");
-	d = JSON.parse(s);
-	if (d !== null && d.lock === 0) {
+	try {
+		d = JSON.parse(s);
+	} catch (ignore) {}
+	if (d && d.lock === 0) {
 		data = d;
 		resetCheckCache();
 		drawGame();
@@ -376,8 +378,10 @@ var loadGame = function () {
 var loadZone = function () {
 	var s, d;
 	s = localStorage.getItem("cz_stage");
-	d = JSON.parse(s);
-	if (d !== null && d.lock === 0) {
+	try {
+		d = JSON.parse(s);
+	} catch (ignore) {}
+	if (d && d.lock === 0) {
 		data = d;
 		resetCheckCache();
 		drawGame();
