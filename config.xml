@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "com.phonegap.getting.started"
+	id		= "org.azki.color_golf"
 	version 	= "1.0.0">
 
-	<name>Hello gap</name>
+	<name>Color Golf</name>
 
 	<description>
-		야옹야옹..hangul!
+		Color Golf Game
 	</description>
 
-	<author href="http://alunny.github.com"
-		email="andrew.lunny@nitobi.com">
-		Andrew Lunny
+	<author href="http://azki.org"
+		email="azki@azki.org">
+		Azki
 	</author>
-
+	
 	<icon src="icon.png" gap:role="default" />
-
-	<feature name="http://api.phonegap.com/1.0/geolocation"/>
-	<feature name="http://api.phonegap.com/1.0/network"/>
-
+	
 	<preference name="orientation" value="portrait" />
 </widget>
