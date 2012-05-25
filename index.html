@@ -5,6 +5,7 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
 		<title>Color Golf</title>
 		<style>
+/*animation*/
 .color0 {background:#5E69FF;animation:color0 1.5s;}
 @keyframes color0{0% {background:#113;} 100% {background:#5E69FF;}}
 .color1 {background:#4AE8D2;animation:color1 1.5s;}
@@ -18,25 +19,23 @@
 .color5 {background:#E84ADF;animation:color5 1.5s;}
 @keyframes color5{0% {background:#312;}100% {background:#E84ADF;}}
 .color99 {background:#fff;}
-body { background:#000; color:#fff; }
+/*design*/
+body { font-family:Georgia; background:#000; color:#fff; }
 a { color:yellow; }
-#score { font-family:Georgia; font-size:12pt; }
-#topBtnPanel,#topStatePanel { margin-top:-5px; font-family:Georgia; font-size:22pt; text-align:center; }
-#topStatePanel { display:none; }
+#score { font-size:12pt; }
+#topBtnPanel { float:right; font-family:Georgia; font-size:25px; }
 #turn { font-weight:bold; }
-#zone { margin:1px 0 2px 0; border-top:1px dashed #fff; border-bottom:1px dashed #fff; }
+#zone { clear:both; margin:1px 0 2px 0; border-top:1px dashed #fff; border-bottom:1px dashed #fff; }
 #zone table { margin:auto; }
 #zone td { background:#000; }
 #btns { padding-left:1px; text-align:center; }
-#btns div { display:inline-block; margin:0 0 -1px 0; border:1px dotted #fff; border-radius:15px; padding:0; width:104px; height:37px; cursor:pointer; }
+#btns div { display:inline-block; margin:0 0 -1px 0; border:1px dotted #fff; border-radius:12px; padding:0; cursor:pointer; }
 		</style>
    	</head>
 	<body style="margin:0;padding:0;">
 		<div id="score">
-			S: <span id="stage"></span>&nbsp;
+			[<span id="stage"></span>]
 			Turn: <span id="turn"></span>
-		</div>
-		<div>
 			<div id="topBtnPanel">
 				<a href="javascript:changeStage(0);void(0);">N</a>
 				|<a href="javascript:changeStage(-1);void(0);">↓</a>
@@ -44,9 +43,6 @@ a { color:yellow; }
 				|<a href="javascript:viewRecord();void(0);">T</a>
 				|<a href="javascript:loadZone();void(0);">R</a>
 				|<a href="javascript:alert(ddd());void(0);">A</a>
-			</div>
-			<div id="topStatePanel">
-				서버와 연결중 . . .
 			</div>
 		</div>
 		<div id="zone"></div>

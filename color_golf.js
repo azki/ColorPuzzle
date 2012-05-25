@@ -24,8 +24,6 @@ var viewHelp = function () {
 	alert(str);
 };
 var viewRecord = function () {
-	$("#topBtnPanel").hide();
-	$("#topStatePanel").show();
 	$.getJSON("http://cz.azki.org/history.jsonp.php?c=" + data.cell + "&callback=?", function (sdata) {
 		var da, i, len, str;
 		da = sdata.split("\t");
@@ -37,13 +35,9 @@ var viewRecord = function () {
 			}
 		}
 		alert(str);
-		$("#topStatePanel").hide();
-		$("#topBtnPanel").show();
 	});
 //	.error(function () {
 //		alert("기록을 불러오는데 실패했어.\n인터넷이 잘되나 확인해봐.");
-//		$("#topStatePanel").hide();
-//		$("#topBtnPanel").show();
 //	});
 };
 var resetCheckCache = function () {
@@ -297,15 +291,11 @@ var setBtn = function (index) {
 			data.name = prompt(data.turn + "턴인데 기록할려면 이름을 입력:", data.name);
 			if (data.name) {
 				sendRecord = function () {
-					$("#topBtnPanel").hide();
-					$("#topStatePanel").show();
 					$.getJSON("http://cz.azki.org/record.jsonp.php?c=" + data.cell + "&t=" + data.turn + "&n=" + encodeURIComponent(data.name) + "&callback=?", function (sdata) {
 						var da;
 						da = sdata.split("\t");
 						alert("기록에 성공했어.\n네 기록은 " + da[1] + "명 중에 " + da[0] + "등이래.\n대단한걸~");
 						changeStage(0);
-						$("#topStatePanel").hide();
-						$("#topBtnPanel").show();
 					});
 //					.error(function() {
 //						if (confirm("기록에 실패했어.\n기록 전송을 위해 서버 연결을 다시 시도할래?")) {
@@ -313,8 +303,6 @@ var setBtn = function (index) {
 //						} else {
 //							changeStage(0);
 //						}
-//						$("#topStatePanel").hide();
-//						$("#topBtnPanel").show();
 //					});
 				};
 				sendRecord();
@@ -340,17 +328,20 @@ var setBtn = function (index) {
 	}
 };
 var createButtons = function () {
-	var i, callbackFn;
+	var i, callbackFn, btnWidth;
 	$("#btns").empty();
 	callbackFn = function () {
 		setBtn($(this).data("index"));
 	};
+	btnWidth = Math.floor(DEVICE_WIDTH / 3 - 2);
 	for (i = 0; i < 6; i += 1) {
 		if (i === 3) {
 			$("<br>").appendTo($("#btns"));
 		}
 		$div = $("<div>")
 		.addClass("color" + i)
+		.width(btnWidth)
+		.height(Math.floor(btnWidth / 3))
 		.data("index", i).appendTo($("#btns"));
 		$div[0].onmousedown = callbackFn;
 		$div[0].ontouchstart = callbackFn;
