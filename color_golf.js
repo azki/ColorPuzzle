@@ -98,7 +98,7 @@ var createTable = function () {
 			.addClass("color" + data.color[rowIndex][cellIndex])
 			.height(320 / data.row).width(320 / data.cell).appendTo(cellElem);
 			if (data.mine[rowIndex][cellIndex]) {
-				$div.css("border-radius", halfSize + "px").css("-moz-border-radius", halfSize + "px").css("-webkit-border-radius", halfSize + "px");
+				$div.css("border-radius", halfSize + "px");
 			}
 		}
 	}
@@ -206,11 +206,11 @@ var saveGame = function () {
 var changeStage = function (plus) {
 	var stage;
 	stage = data.cell + plus;
-	if (stage < 5) {
+	if (stage < 3) {
 		stage = 30;
 	}
-	if (30 < stage) {
-		stage = 5;
+	if (20 < stage) {
+		stage = 3;
 	}
 	clearSave();
 	initGame(stage);
@@ -227,6 +227,50 @@ var restoreName = function () {
 		data.name = localStorage.getItem("cz_name");
 	}
 };
+
+var ddd = function () {
+	var i, s = "";
+	for (i = 0; i < data.row; i += 1) {
+		s += data.color[i].join("");
+	}
+	console.log(s);
+	console.log(dd2());
+	return JSON.stringify(ddMap, null, 2);
+};
+var ddMap = {};
+var dd2 = function () {
+	var startTime = new Date();
+	ddMap = {};
+	saveGame();
+	NO_UI = true;
+	dd3(JSON.stringify(data), "");
+	NO_UI = false;
+	loadGame();
+	return (new Date() - startTime) / 1000;
+};
+var dd3 = function(s, w) {
+	if (data.row * data.cell <= data.minesum) {
+		if (!ddMap["c" + w.length]) {
+			ddMap["c" + w.length] = 1;
+		} else {
+			ddMap["c" + w.length] += 1;
+		}
+		return;
+	}
+	var i, s2, w2, drawCount;
+	for (i = 0; i < 6; i += 1) {
+		resetCheckCache();
+		drawCount = checkZone(0, 0, i);
+		if (drawCount) {
+			s2 = JSON.stringify(data);
+			w2 = w +  i;
+			dd3(s2, w2);
+			data = JSON.parse(s);
+		}
+	}
+};
+
+
 var setBtn = function (index) {
 	var drawCount, i, len, halfSize;
 	if (data.lock < 0) {
@@ -295,7 +339,7 @@ var setBtn = function (index) {
 	} else {
 		resetCheckCache();
 		data.lock = 0;
-		saveGame();
+		//saveGame();
 	}
 };
 var createButtons = function () {
@@ -353,48 +397,5 @@ var getLastCell = function () {
 			return 1 * lastCell;
 		}
 	}
-	return 5;
-};
-
-
-var ddd = function () {
-	var i, s = "";
-	for (i = 0; i < data.row; i += 1) {
-		s += data.color[i].join("");
-	}
-	console.log(s);
-	console.log(dd2());
-	return JSON.stringify(ddMap, null, 2);
-};
-var ddMap = {};
-var dd2 = function () {
-	var startTime = new Date();
-	ddMap = {};
-	saveGame();
-	NO_UI = true;
-	dd3(JSON.stringify(data), "");
-	NO_UI = false;
-	loadGame();
-	return (new Date() - startTime) / 1000;
-};
-var dd3 = function(s, w) {
-	if (data.row * data.cell <= data.minesum) {
-		if (!ddMap["c" + w.length]) {
-			ddMap["c" + w.length] = 1;
-		} else {
-			ddMap["c" + w.length] += 1;
-		}
-		return;
-	}
-	var i, s2, w2, drawCount;
-	for (i = 0; i < 6; i += 1) {
-		resetCheckCache();
-		drawCount = checkZone(0, 0, i);
-		if (drawCount) {
-			s2 = JSON.stringify(data);
-			w2 = w +  i;
-			dd3(s2, w2);
-			data = JSON.parse(s);
-		}
-	}
+	return 3;
 };

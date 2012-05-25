@@ -5,18 +5,18 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
 		<title>Color Golf</title>
 		<style>
-.color0 {background:#5E69FF;-webkit-animation:color0 1.5s;}
-@-webkit-keyframes color0{0% {background:#113;} 100% {background:#5E69FF;}}
-.color1 {background:#4AE8D2;-webkit-animation:color1 1.5s;}
-@-webkit-keyframes color1{0% {background:#132;}100% {background:#4AE8D2;}}
-.color2 {background:#8DFF51;-webkit-animation:color2 1.5s;}
-@-webkit-keyframes color2{0% {background:#131;}100% {background:#8DFF51;}}
-.color3 {background:#FFDB51;-webkit-animation:color3 1.5s;}
-@-webkit-keyframes color3{0% {background:#321;}100% {background:#FFDB51;}}
-.color4 {background:#FF844C;-webkit-animation:color4 1.5s;}
-@-webkit-keyframes color4{0% {background:#311;}100% {background:#FF844C;}}
-.color5 {background:#E84ADF;-webkit-animation:color5 1.5s;}
-@-webkit-keyframes color5{0% {background:#312;}100% {background:#E84ADF;}}
+.color0 {background:#5E69FF;animation:color0 1.5s;}
+@keyframes color0{0% {background:#113;} 100% {background:#5E69FF;}}
+.color1 {background:#4AE8D2;animation:color1 1.5s;}
+@keyframes color1{0% {background:#132;}100% {background:#4AE8D2;}}
+.color2 {background:#8DFF51;animation:color2 1.5s;}
+@keyframes color2{0% {background:#131;}100% {background:#8DFF51;}}
+.color3 {background:#FFDB51;animation:color3 1.5s;}
+@keyframes color3{0% {background:#321;}100% {background:#FFDB51;}}
+.color4 {background:#FF844C;animation:color4 1.5s;}
+@keyframes color4{0% {background:#311;}100% {background:#FF844C;}}
+.color5 {background:#E84ADF;animation:color5 1.5s;}
+@keyframes color5{0% {background:#312;}100% {background:#E84ADF;}}
 .color99 {background:#fff;}
 body { background:#000; color:#fff; }
 a { color:yellow; }
@@ -38,11 +38,12 @@ a { color:yellow; }
 		</div>
 		<div>
 			<div id="topBtnPanel">
-				<a href="javascript:changeStage(0);void(0);">Re</a>
-				|<a href="javascript:changeStage(-1);void(0);">Lv↓</a>
-				|<a href="javascript:changeStage(1);void(0);">Lv↑</a>
-				|<a href="javascript:viewRecord();void(0);">Top</a>
-				|<a href="javascript:alert(ddd());void(0);">?</a>
+				<a href="javascript:changeStage(0);void(0);">N</a>
+				|<a href="javascript:changeStage(-1);void(0);">↓</a>
+				|<a href="javascript:changeStage(1);void(0);">↑</a>
+				|<a href="javascript:viewRecord();void(0);">T</a>
+				|<a href="javascript:loadGame();void(0);">R</a>
+				|<a href="javascript:alert(ddd());void(0);">A</a>
 			</div>
 			<div id="topStatePanel">
 				서버와 연결중 . . .
@@ -60,12 +61,16 @@ var init = function () {
 		initGame(getLastCell());
 	}
 };
-document.addEventListener('touchmove', function (e) {
-	e.preventDefault();
-}, false);
-document.addEventListener("deviceready", function () {
+if (typeof PhoneGap === "undefined") {
 	init();
-}, false);
+} else {
+	document.addEventListener('touchmove', function (e) {
+		e.preventDefault();
+	}, false);
+	document.addEventListener("deviceready", function () {
+		init();
+	}, false);
+}
 		</script>
 	</body>		
 </html>
