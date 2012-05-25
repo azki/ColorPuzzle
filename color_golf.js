@@ -13,7 +13,8 @@ var data = {
 var checkCache = [];
 var animateBuffer = [];
 var NO_UI = false;
-var DEVICE_WIDTH = 320;
+var DEVICE_WIDTH = $(window).width();
+DEVICE_WIDTH -= DEVICE_WIDTH % 20;
 
 var viewHelp = function () {
 	var str;
