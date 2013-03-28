@@ -128,8 +128,8 @@ var createTable = function () {
 var drawStage = function () {
 	$("#stage").text(data.row + "x" + data.cell);
 };
-var drawTurn = function (plus) {
-	$("#turn").text(data.turn += (plus || 0));
+var drawTurn = function () {
+	$("#turn").text(data.turn);
 };
 var setMineBorder = function ($zone, size) {
 	$zone.css("border-radius", size + "px");
@@ -263,7 +263,8 @@ var setBtn = function (index) {
 	data.lock = 1;
 	drawCount = checkZone(0, 0, index);
 	if (0 < drawCount) {
-		drawTurn(1);
+		data.turn += 1;
+		drawTurn();
 	}
 	if (data.row * data.cell <= data.minesum) {
 		data.lock = -1; //end
