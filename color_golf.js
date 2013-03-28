@@ -1,5 +1,5 @@
 /*global window, document, $, alert, confirm, prompt, localStorage, setTimeout*/
-/*global checkAround,initGame*/
+/*global checkAround,initGame,saveZone*/
 var data = {
 	row: 0,
 	cell: 0,
@@ -223,49 +223,6 @@ var restoreName = function () {
 	}
 };
 
-var ddd = function () {
-	var i, s = "";
-	for (i = 0; i < data.row; i += 1) {
-		s += data.color[i].join("");
-	}
-	console.log(s);
-	console.log(dd2());
-	return JSON.stringify(ddMap, null, 2);
-};
-var ddMap = {};
-var dd2 = function () {
-	var startTime = new Date();
-	ddMap = {};
-	saveGame();
-	NO_UI = true;
-	dd3(JSON.stringify(data), "");
-	NO_UI = false;
-	loadGame();
-	return (new Date() - startTime) / 1000;
-};
-var dd3 = function(s, w) {
-	if (data.row * data.cell <= data.minesum) {
-		if (!ddMap["c" + w.length]) {
-			ddMap["c" + w.length] = 1;
-		} else {
-			ddMap["c" + w.length] += 1;
-		}
-		return;
-	}
-	var i, s2, w2, drawCount;
-	for (i = 0; i < 6; i += 1) {
-		resetCheckCache();
-		drawCount = checkZone(0, 0, i);
-		if (drawCount) {
-			s2 = JSON.stringify(data);
-			w2 = w +  i;
-			dd3(s2, w2);
-			data = JSON.parse(s);
-		}
-	}
-};
-
-
 var setBtn = function (index) {
 	var drawCount, i, len, halfSize;
 	if (data.lock < 0) {
@@ -328,7 +285,7 @@ var setBtn = function (index) {
 	}
 };
 var createButtons = function () {
-	var i, callbackFn, btnWidth;
+	var i, callbackFn, btnWidth, $div;
 	$("#btns").empty();
 	callbackFn = function () {
 		setBtn($(this).data("index"));
