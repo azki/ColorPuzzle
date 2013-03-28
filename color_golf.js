@@ -63,6 +63,18 @@ var initZone = function () {
 		}
 	}
 };
+var initZoneByCode = function (code) {
+	var codeArr, rowIndex, cellIndex;
+	codeArr = code.split("");
+	for (rowIndex = 0; rowIndex < data.row; rowIndex += 1) {
+		data.color[rowIndex] = [];
+		data.mine[rowIndex] = [];
+		for (cellIndex = 0; cellIndex < data.cell; cellIndex += 1) {
+			data.mine[rowIndex][cellIndex] = rowIndex + cellIndex === 0;
+			data.color[rowIndex][cellIndex] = codeArr.shift();
+		}
+	}
+};
 var initData = function (row, cell) {
 	data.color = [];
 	data.mine = [];
@@ -72,6 +84,18 @@ var initData = function (row, cell) {
 	data.turn = 0;
 	data.lock = 0;
 	initZone();
+	resetCheckCache();
+	saveZone();
+};
+var initDataByCode = function (code) {
+	data.color = [];
+	data.mine = [];
+	data.row = Math.round(Math.sqrt(code.length));
+	data.cell = data.row;
+	data.minesum = 1;
+	data.turn = 0;
+	data.lock = 0;
+	initZoneByCode(code);
 	resetCheckCache();
 	saveZone();
 };
@@ -343,6 +367,11 @@ var loadZone = function () {
 };
 var initGame = function (cell) {
 	initData(cell, cell);
+	drawGame();
+	localStorage.setItem("cz_cell", data.cell);
+};
+var initGameByCode = function (code) {
+	initDataByCode(code);
 	drawGame();
 	localStorage.setItem("cz_cell", data.cell);
 };
