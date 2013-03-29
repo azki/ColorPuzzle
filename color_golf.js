@@ -12,7 +12,6 @@ var data = {
 };
 var checkCache = [];
 var animateBuffer = [];
-var NO_UI = false;
 var DEVICE_WIDTH = $(window).width();
 DEVICE_WIDTH -= DEVICE_WIDTH % 20;
 
@@ -165,12 +164,16 @@ var animateBorder = function ($zone, rowIndex, cellIndex) {
 	}, 80);
 };
 var get$zone = function (rowIndex, cellIndex) {
-	if (!NO_UI) {
+	if (0 <= rowIndex && rowIndex < data.cell && 0 <= cellIndex && cellIndex < data.cell) {
 		var $zone = $("#zone div:eq(" + (data.cell * rowIndex + cellIndex) + ")");
 		return $zone.length ? $zone : null;
-	} else {
-		return 0 <= rowIndex && rowIndex < data.row && 0 <= cellIndex && cellIndex < data.cell;
 	}
+	return false;
+};
+var setColorToZone = function ($zone, rowIndex, cellIndex) {
+	$zone
+	.removeClass()
+	.addClass("color" + data.color[rowIndex][cellIndex]);
 };
 var checkZone = function (rowIndex, cellIndex, newColorIndex) {
 	var $zone = get$zone(rowIndex, cellIndex);
@@ -178,20 +181,14 @@ var checkZone = function (rowIndex, cellIndex, newColorIndex) {
 		if (data.mine[rowIndex][cellIndex] === true) {
 			checkCache[rowIndex][cellIndex] = true;
 			data.color[rowIndex][cellIndex] = newColorIndex;
-			if (!NO_UI) {
-				$zone
-				.removeClass()
-				.addClass("color" + data.color[rowIndex][cellIndex]);
-			}
+			setColorToZone($zone, rowIndex, cellIndex);
 			return checkAround(rowIndex, cellIndex, newColorIndex);
 		} else {
 			if (data.color[rowIndex][cellIndex] === newColorIndex) {
 				checkCache[rowIndex][cellIndex] = true;
 				data.mine[rowIndex][cellIndex] = true;
 				data.minesum += 1;
-				if (!NO_UI) {
-					animateBorder($zone, rowIndex, cellIndex);
-				}
+				animateBorder($zone, rowIndex, cellIndex);
 				return 1 + checkAround(rowIndex, cellIndex, newColorIndex);
 			} else {
 				checkCache[rowIndex][cellIndex] = true;
