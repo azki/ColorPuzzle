@@ -70,7 +70,7 @@ var initZoneByCode = function (code) {
 		data.mine[rowIndex] = [];
 		for (cellIndex = 0; cellIndex < data.cell; cellIndex += 1) {
 			data.mine[rowIndex][cellIndex] = rowIndex + cellIndex === 0;
-			data.color[rowIndex][cellIndex] = codeArr.shift();
+			data.color[rowIndex][cellIndex] = +codeArr.shift();
 		}
 	}
 };
@@ -78,7 +78,7 @@ var initData = function (row, cell) {
 	data.color = [];
 	data.mine = [];
 	data.row = row;
-	data.cell = cell;
+	data.cell = data.row;
 	data.minesum = 1;
 	data.turn = 0;
 	data.lock = 0;
@@ -369,7 +369,7 @@ var initGame = function (cell) {
 	localStorage.setItem("cz_cell", data.cell);
 };
 var initGameByCode = function (code) {
-	initDataByCode(code);
+	initDataByCode(code.replace(/\s/g, ''));
 	drawGame();
 	localStorage.setItem("cz_cell", data.cell);
 };
